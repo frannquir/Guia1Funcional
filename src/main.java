@@ -47,11 +47,11 @@ public class main {
                 case 8 -> eliminarDuplicados().forEach(System.out::println);
                 case 9 -> obtenerTop3Numeros().forEach(System.out::println);
                 case 10 -> System.out.println(agruparPalabrasPorLongitud());
-                //case 11 -> productoDeNumeros();
-                //case 12 -> nombreMasLargo();
-                //case 13 -> listaEnterosComoString();
-                //case 14 -> agruparParesEImpares();
-                //case 15 -> sumaDeCuadradosImpares();
+                case 11 -> System.out.println(productoDeNumeros());
+                case 12 -> System.out.println(nombreMasLargo());
+                case 13 -> System.out.println(listaEnterosComoString());
+                case 14 -> System.out.println(agruparParesEImpares());
+                case 15 -> System.out.println(sumaDeCuadradosImpares());
                 case 0 -> System.out.println("Saliendo del programa...");
                 default -> System.out.println("Opción no válida, intente de nuevo.");
             }
@@ -116,6 +116,31 @@ public class main {
     private static Map<Integer, List<String>> agruparPalabrasPorLongitud() {
         return palabras.stream()
                 .collect(Collectors.groupingBy(String::length));
+    }
+    private static int productoDeNumeros() {
+        return numeros.stream()
+                .reduce(1, (n1, n2) -> n1 * n2);
+    }
+    private static String nombreMasLargo() {
+        return nombres.stream()
+                .reduce((n1, n2) -> n1.length() > n2.length() ? n1 : n2)
+                .orElse(" ");
+    }
+    private static String listaEnterosComoString() {
+        return numeros.stream()
+                .map(n1 -> n1 + ", ")
+                .collect(Collectors.joining())
+                .replaceAll(",$",""); // Elimina el ultimo elemento del string. $ es el final de la cadena.
+    }
+    private static Map<Boolean, List<Integer>> agruparParesEImpares () {
+        return numeros.stream()
+                .collect(Collectors.partitioningBy(num -> num % 2 == 0));
+    }
+    private static int sumaDeCuadradosImpares () {
+        return numeros.stream()
+                .filter(num -> num % 2 != 0)
+                .map(num -> num*num)
+                .reduce(0, Integer::sum); // es lo mismo que (n1, n2) -> n1 + n2
     }
 }
 
